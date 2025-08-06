@@ -1,0 +1,27 @@
+/target
+/classes
+/checkouts
+profiles.clj
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+/.lein-*
+/.nrepl-port
+/.prepl-port
+.hgignore
+.hg/
+.cursor
+
+# clj-kondo: ignore all except our defined config
+.clj-kondo/*
+!.clj-kondo/README.md
+!.clj-kondo/ignore
+!.clj-kondo/config.edn
+!.clj-kondo/config/
+!.clj-kondo/src/
+!.clj-kondo/test/
+!.clj-kondo/macros/
+
+.lsp/
+.portal

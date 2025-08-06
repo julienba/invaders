@@ -1,0 +1,87 @@
+; This is the Calva REPL Window.
+; It's just a file, really, with some special treatment from Calva.
+; Use it as a REPL input prompt if you like. (When the REPL is connected.)
+; TIPS: The keyboard shortcut `ctrl+alt+o r` shows and focuses this window
+; Please see https://calva.io/repl-window/ for more info.
+; Happy coding! ♥️
+
+; TIPS: As with any Clojure file when the REPL is connected:
+; - `alt+enter` evaluates the current top level form.
+; - `ctrl+enter` evaluates the current form.
+; Special for this file:
+; - `alt+up` and `alt+down` traverse up and down the REPL command history
+;    when the cursor is after the last contents at the prompt
+;
+; See also the Calva Inspector: https://calva.io/inspector/
+
+PLEASE NOTE
+We will update the default location of this file.
+The new default location will be
+  "<projectRootPath>/.calva/repl.calva-repl"
+For now the legacy path is used by default.
+To give yourself a smooth transition, you can opt in
+to the change, by configuring this setting as false:
+  "calva.useLegacyReplWindowPath"
+and then add "**/.calva/repl.calva-repl" to your ".gitignore" file.
+
+
+This file is configured as the output destination for all REPL output.
+You can configure this with the setting:
+  "calva.outputDestinations"
+
+
+; Connecting ...
+; Reading port file: file:///home/jba/PROJECTS/invaders/.nrepl-port ...
+; Using host:port localhost:42779 ...
+; Hooking up nREPL sessions ...
+; Connected session: clj
+; Evaluating code from settings: 'calva.autoEvaluateCode.onConnect.clj'
+nil
+clj꞉invaders.core꞉> 
+"Please see https://calva.io/output/#about-stdout-in-the-repl-window
+about why stdout printed to this file is prepended with `;` to be line comments."
+clj꞉invaders.core꞉> 
+nil
+clj꞉invaders.core꞉> 
+#'invaders.core/str->grid
+clj꞉invaders.core꞉> 
+; Execution error (FileNotFoundException) at invaders.core-test/eval8249$loading (form-init1459538465299524152.clj:1).
+; Could not locate invaders/core1__init.class, invaders/core1.clj or invaders/core1.cljc on classpath.
+clj꞉invaders.core-test꞉> 
+nil
+clj꞉invaders.core-test꞉> 
+#'invaders.core-test/str->grid-test
+clj꞉invaders.core-test꞉> 
+;
+; Testing invaders.core-test
+; [[\- \- \o \-] [\- \- \- \o] [\- \- \o \o]]
+;
+; Ran 1 tests containing 0 assertions.
+; 0 failures, 0 errors.
+true
+clj꞉invaders.core-test꞉> 
+#'invaders.core-test/str->grid-test
+clj꞉invaders.core-test꞉> 
+;
+; Testing invaders.core-test
+;
+; Ran 1 tests containing 1 assertions.
+; 0 failures, 0 errors.
+true
+clj꞉invaders.core-test꞉> 
+#'invaders.core/str->grid
+clj꞉invaders.core꞉> 
+; Syntax error compiling at (test/invaders/core_test.clj:21:12).
+; No such var: sut/find-pattern
+clj꞉invaders.core-test꞉> 
+#'invaders.core/find-pattern
+clj꞉invaders.core꞉> 
+#'invaders.core-test/simple-radar-test
+clj꞉invaders.core-test꞉> 
+;
+; Testing invaders.core-test
+;
+; Ran 2 tests containing 3 assertions.
+; 0 failures, 0 errors.
+true
+clj꞉invaders.core-test꞉> 
