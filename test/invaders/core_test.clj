@@ -32,6 +32,8 @@
     (let [invader (str->grid "oo")]
       (is (empty? (sut/find-pattern empty-radar-1x3 invader))))
 
+    ;(sut/new-print-grid-with-patterns left-radar-1x3 left-invader)
+
     (testing "Left invaders"
       (is (= [[0 2]] (sut/find-pattern empty-radar-1x3 left-invader))
           "Potential invader on the right side")
@@ -57,6 +59,8 @@
                           -oo
                           o--
                           --o")]
+    (sut/print-radar-with-invaders radar (str->grid "-o
+                                                        o-"))
     (is (= [[-1 0]
             [0 -1]
             [0 2]
@@ -68,8 +72,8 @@
                                                o-"))))
     (is (= [[-1 -1]
             [3 2]]
-         (sut/find-pattern radar (str->grid "oo
-                                             oo"))))
+           (sut/find-pattern radar (str->grid "oo
+                                               oo"))))
     (is (= [[-1 -1]
             [-1 2]
             [0 0]
@@ -92,6 +96,8 @@
   (let [radar (str->grid (slurp "resources/radar/1.txt"))
         invader1 (str->grid (slurp "resources/invaders/1.txt"))
         invader2 (str->grid (slurp "resources/invaders/2.txt"))]
+    ;(sut/print-radar-with-invaders)
+    (sut/print-radar-with-invaders radar (str->grid (slurp "resources/invaders/2.txt")))
     ;; TODO check the actual pattern
     (is (seq (sut/find-pattern radar invader1)))
     (is (seq (sut/find-pattern radar invader2)))))
