@@ -32,9 +32,41 @@
   "Returns a sequence of [row col] coordinates where the pattern starts."
   [grid pattern]
   (let [grid-rows (count grid)
-        grid-cols (count (first grid))]
-    ;; Allow patterns to start at any position in the grid
-    (for [row (range grid-rows)
-          col (range grid-cols)
+        grid-cols (count (first grid))
+        pattern-rows (count pattern)
+        pattern-cols (count (first pattern))
+        ;; Allow patterns to start before and beyond the grid boundaries
+        ;; but ensure at least one character overlaps with the grid
+        min-row (- (dec pattern-rows)) ; Allow pattern to start with only bottom char visible
+        max-row (dec grid-rows) ; Allow pattern to start with only top char visible
+        min-col (- (dec pattern-cols)) ; Allow pattern to start with only rightmost char visible
+        max-col (dec grid-cols)] ; Allow pattern to start with only leftmost char visible
+    ;; Allow patterns to start at any position in and around the grid
+    (for [row (range min-row (inc max-row))
+          col (range min-col (inc max-col))
           :when (pattern-matches? grid pattern row col)]
       [row col])))
+
+(defn print-grid-with-patterns
+  [grid pattern]
+  (let [matches (find-pattern grid pattern)
+        pattern-rows (count pattern)
+        pattern-cols (count (first pattern))]
+    (doseq [row (range (count grid))]
+      (doseq [col (range (count (first grid)))]
+        (let [cell-value (get-in grid [row col])
+              is-pattern-start (some #(= % [row col]) matches)
+              is-in-pattern (some #(and (<= row (+ (first %) pattern-rows -1))
+                                        (<= col (+ (second %) pattern-cols -1))
+                                        (>= row (first %))
+                                        (>= col (second %))) matches)]
+          (print (cond
+                   is-pattern-start "["
+                   is-in-pattern "|"
+                   :else " ")
+                 cell-value
+                 (cond
+                   is-pattern-start "]"
+                   is-in-pattern "|"
+                   :else " "))))
+      (println))))
