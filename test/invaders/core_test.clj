@@ -136,4 +136,6 @@
     (is (seq (sut/find-pattern radar invader2)))))
 
 (deftest rich-print-test
-  (is (nil? (#'sut/rich-print :test))))
+  (is (nil? (#'sut/rich-print :test)))
+  (is (nil? (#'sut/print-radar-with-invaders (str->grid "-o-") (str->grid "-o")))
+      "Printing does not crash"))

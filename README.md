@@ -4,13 +4,14 @@ A Clojure library designed to ... well, that part is up to you.
 
 ## Usage
 
-To see the invaders (or potential invaders), start a REPL with `lein` and run the function `(demo)`
+To see the invaders (or potential invaders), start a REPL with `lein repl` and run the function `(demo)`
 
 ## TODO
-- [ ] Test for the str->grid
+- [x] Test for the str->grid
 - [ ] Handle empty invader: an invader sould contain at least one 'o'
 - [ ] More corner case: empty radar, empty invader
 - [ ] Note about performance
+- [ ] Add screenshot
 
 ## Code style
 

@@ -24,7 +24,7 @@
                                                          :grid grid}))))
     grid))
 
-(defn pattern-matches?
+(defn- pattern-matches?
   [grid pattern start-row start-col]
   (let [grid-rows (count grid)
         grid-cols (count (first grid))
@@ -74,7 +74,7 @@
                           [(nth colors (mod idx (count colors))) x])
                         xs)))
 
-(defn print-radar-with-invaders
+(defn- print-radar-with-invaders
   "Helper for printing the grid with color pattern locations highlighted, showing complete patterns even when they extend beyond the grid.
    Colors are working when used in the terminal (ie. not in the REPL)"
   [grid pattern]
