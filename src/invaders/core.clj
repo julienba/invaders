@@ -1,16 +1,28 @@
 (ns invaders.core
   (:require [clojure.string :as string]
-            [bling.core :as bling]
-            [bling.banner :refer [banner]]
-            bling.fonts.miniwi))
+            [bling.core :as bling]))
 
-;; TODO check that the string is a grid: size and chars used
 (defn str->grid
-  "Convert a string into a 2D array
-   NOTE: It would be more memory efficient with make-array"
+  "Sanatize the input and return a 2D array.
+   It will throw an exception if the grid is not legitimate:
+   - wrong char
+   - wrong size"
   [s]
-  (into [] (for [line (string/split-lines s)]
-             (into [] (remove #{\space} (seq line))))))
+  (when-not (string? s)
+    (throw (ex-info "Wrong input" {:input s})))
+  (when (string/blank? s)
+    (throw (ex-info "Empty grid" {:input s})))
+  (let [grid (into [] (for [line (string/split-lines s)
+                            :let [line (string/trim line)
+                                  _  (when-not (re-matches #"^[\-oO]*$" line)
+                                       (throw (ex-info "Grid string contains invalid characters" {:input s})))]]
+                        (into [] (seq (string/trim line)))))
+        row-length (count (first grid))]
+    (doseq [row (drop 1 grid)]
+      (when-not (= row-length (count row))
+        (throw (ex-info "Grid rows have different size" {:input s
+                                                         :grid grid}))))
+    grid))
 
 (defn pattern-matches?
   [grid pattern start-row start-col]
@@ -50,7 +62,7 @@
           :when (pattern-matches? grid pattern row col)]
       [row col])))
 
-(defn rich-print
+(defn- rich-print
   [& args]
   (print (apply bling/bling args)))
 
