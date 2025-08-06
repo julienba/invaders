@@ -85,7 +85,7 @@
     (println "For invader:")
     (doseq [row (range pattern-cols)]
       (doseq [col (range pattern-rows)]
-        (print (str " " (get-in pattern [row col] " ") " ")))
+        (print (str (get-in pattern [row col] " "))))
       (println))
     (println)
     (print (format "Found %d matches: " (count matches)))
@@ -93,15 +93,8 @@
       (rich-print [color match] " "))
     (println)
 
-    ;; Print column headers
-    (print "   ")
-    (doseq [col (range min-col (inc max-col))]
-      (print (format "%2d " col)))
-    (println)
-
     ;; Print each row
     (doseq [row (range min-row (inc max-row))]
-      (print (format "%2d " row))
       (doseq [col (range min-col (inc max-col))]
         (let [;; Check if this position is within the original grid
               in-original-grid? (and (>= row 0) (< row grid-rows)
@@ -130,7 +123,8 @@
           (rich-print
            (if (or is-pattern-start?
                    pattern-info)
-             [(:color pattern-info) (str " " display-char " ")]
-             (str " " display-char " ")))))
-      (println))))
+             [(:color pattern-info) (str "" display-char "")]
+             (str "" display-char "")))))
+      (println))
+      (println)))
 
