@@ -1,6 +1,8 @@
 (ns invaders.core
   (:require [clojure.string :as string]
-            [bling.core :as bling]))
+            [bling.core :as bling]
+            [bling.banner :refer [banner]]
+            [bling.fonts.rounded]))
 
 (defn str->grid
   "Sanatize the input and return a 2D array.
@@ -96,15 +98,17 @@
         max-col (apply max all-cols)]
 
     ;; Print search invader
-    (println "For invader:")
-    (doseq [row (range pattern-cols)]
-      (doseq [col (range pattern-rows)]
+    (println "\nFor invader:")
+    (doseq [row (range pattern-rows)]
+      (doseq [col (range pattern-cols)]
         (print (str (get-in pattern [row col] " "))))
       (println))
+    (println)
 
-    (print (format "Found %d matches: " (count matches)))
+    (print (format "Found %d matches: \n" (count matches)))
     (doseq [[color match] (indexed-by-color matches)]
       (rich-print [color match] " "))
+    (println)
     (println)
 
     ;; Print each row
@@ -145,6 +149,14 @@
 (defn file->grid [file-path]
   (str->grid (slurp file-path)))
 
+(defn- print-big-title []
+  (println (banner
+            {:font               bling.fonts.rounded/rounded
+             :font-weight        :bold
+             :text               "Space Invaders"
+             :gradient-direction :to-left
+             :gradient-colors    [:cool :warm]})))
+
 (defn- print-title [s]
   (bling/print-bling [{:background-color "purple"
                        :color            :white
@@ -160,3 +172,15 @@
 
     (print-title "## Invader 2 ##")
     (print-radar-with-invaders radar invader2)))
+
+(defn -main
+  "This is the main entry point for the application.
+  It expects two command-line arguments, which are file paths."
+  [& args]
+  (print-big-title)
+  (if (= (count args) 2)
+    (let [[radar-path invader-path] args
+          radar (str->grid (slurp radar-path))
+          invader (str->grid (slurp invader-path))]
+      (print-radar-with-invaders radar invader))
+    (println "Error: Please provide exactly two file paths as arguments.")))
