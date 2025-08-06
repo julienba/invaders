@@ -84,13 +84,11 @@
            (sut/find-pattern radar (str->grid "o-
                                                -o"))))))
 
-(defn- file->grid [file-path]
-  (str->grid (slurp file-path)))
-
+;; TODO expand testing
 (deftest file->grid-test
   (is (= [[\- \o]
           [\o \-]]
-         (file->grid "resources/invaders/3.txt"))))
+         (sut/file->grid "resources/invaders/3.txt"))))
 
 (deftest readme-test
   (let [radar (str->grid (slurp "resources/radar/1.txt"))

@@ -1,6 +1,8 @@
 (ns invaders.core
   (:require [clojure.string :as string]
-            [bling.core :as bling]))
+            [bling.core :as bling]
+            [bling.banner :refer [banner]]
+            bling.fonts.miniwi))
 
 ;; TODO check that the string is a grid: size and chars used
 (defn str->grid
@@ -87,7 +89,7 @@
       (doseq [col (range pattern-rows)]
         (print (str (get-in pattern [row col] " "))))
       (println))
-    (println)
+
     (print (format "Found %d matches: " (count matches)))
     (doseq [[color match] (indexed-by-color matches)]
       (rich-print [color match] " "))
@@ -126,5 +128,23 @@
              [(:color pattern-info) (str "" display-char "")]
              (str "" display-char "")))))
       (println))
-      (println)))
+    (println)))
 
+(defn file->grid [file-path]
+  (str->grid (slurp file-path)))
+
+(defn- print-title [s]
+  (bling/print-bling [{:background-color "purple"
+                       :color            :white
+                       :font-weight      :bold} s]))
+
+(defn demo []
+  (let [radar (str->grid (slurp "resources/radar/1.txt"))
+        invader1 (str->grid (slurp "resources/invaders/1.txt"))
+        invader2 (str->grid (slurp "resources/invaders/2.txt"))]
+
+    (print-title "## Invader 1 ##")
+    (print-radar-with-invaders radar invader1)
+
+    (print-title "## Invader 2 ##")
+    (print-radar-with-invaders radar invader2)))
