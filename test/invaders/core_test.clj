@@ -79,3 +79,19 @@
             [3 2]]
            (sut/find-pattern radar (str->grid "o-
                                                -o"))))))
+
+(defn- file->grid [file-path]
+  (str->grid (slurp file-path)))
+
+(deftest file->grid-test
+  (is (= [[\- \o]
+          [\o \-]]
+         (file->grid "resources/invaders/3.txt"))))
+
+(deftest readme-test
+  (let [radar (str->grid (slurp "resources/radar/1.txt"))
+        invader1 (str->grid (slurp "resources/invaders/1.txt"))
+        invader2 (str->grid (slurp "resources/invaders/2.txt"))]
+    ;; TODO check the actual pattern
+    (is (seq (sut/find-pattern radar invader1)))
+    (is (seq (sut/find-pattern radar invader2)))))
