@@ -4,14 +4,14 @@ A Clojure library designed to track down invaders.
 
 ## Usage
 
-To see the invaders (or potential invaders), start a REPL with `lein repl` and run the function `(demo)`
+To see the invaders (or potential invaders), start a REPL with `lein repl` and run the function `(demo)`.
 
 To run it with specific file:
 ```bash
 lein run path-to-radar path-to-invader
 ```
 
-[bling](https://github.com/paintparty/bling) is used to bring some colors to the ascii
+I used [bling](https://github.com/paintparty/bling) to bring some colors to the ascii.
 
 Example of execution:
 
@@ -23,7 +23,7 @@ For naming I use the convention described in [Elements of Clojure by Zachary Tel
 
 In addition to that:
 
-1. I used private function (`defn-`) for function that have no business being used outside of the current namespace. I still test this function with `'#` when it make sense. I find this convention useful for refactoring.
+1. I used private function (`defn-`) for function that have no business being used outside of the current namespace. I still test this function with `'#` when it make sense. I find this convention useful for refactoring
 
 2. In my test file I use the alias `sut` for [System under test](https://en.wikipedia.org/wiki/System_under_test)
 
