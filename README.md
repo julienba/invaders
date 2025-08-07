@@ -1,15 +1,20 @@
 # invaders
 
-A Clojure library designed to ... well, that part is up to you.
+A Clojure library designed to track down invaders.
 
 ## Usage
 
 To see the invaders (or potential invaders), start a REPL with `lein repl` and run the function `(demo)`
 
+To run it with specific file:
+```bash
+lein run path-to-radar path-to-invader
+```
+
 ## TODO
 - [x] Test for the str->grid
-- [ ] Handle empty invader: an invader sould contain at least one 'o'
-- [ ] More corner case: empty radar, empty invader
+- [x] Handle empty invader: an invader sould contain at least one 'o'
+- [x] More corner case: empty radar, empty invader
 - [ ] Note about performance
 - [ ] Add screenshot
 
@@ -23,8 +28,7 @@ In addition to that:
 
 2. In my test file I use the alias `sut` for [System under test](https://en.wikipedia.org/wiki/System_under_test)
 
-While I like these conventions, I'm not attached to them either.
-
+While I like these conventions, I'm not too attached to them either.
 
 ## License
 

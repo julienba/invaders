@@ -5,7 +5,7 @@
             [bling.fonts.rounded]))
 
 (defn str->grid
-  "Sanatize the input and return a 2D array.
+  "Sanitize the input and return a 2D array.
    It will throw an exception if the grid is not legitimate:
    - wrong char
    - wrong size"
@@ -26,12 +26,15 @@
                                                          :grid grid}))))
     grid))
 
+(defn- count-rows-and-cols [grid pattern]
+  {:grid-rows (count grid)
+   :grid-cols (count (first grid))
+   :pattern-rows (count pattern)
+   :pattern-cols (count (first pattern))})
+
 (defn- pattern-matches?
   [grid pattern start-row start-col]
-  (let [grid-rows (count grid)
-        grid-cols (count (first grid))
-        pattern-rows (count pattern)
-        pattern-cols (count (first pattern))]
+  (let [{:keys [grid-rows grid-cols pattern-rows pattern-cols]} (count-rows-and-cols grid pattern)]
     ;; Check each cell in the pattern that overlaps with the grid
     (every? true?
             (for [r (range pattern-rows)
@@ -48,10 +51,9 @@
 (defn find-pattern
   "Returns a sequence of [row col] coordinates where the pattern starts."
   [grid pattern]
-  (let [grid-rows (count grid)
-        grid-cols (count (first grid))
-        pattern-rows (count pattern)
-        pattern-cols (count (first pattern))
+  (when (or (empty? grid) (empty? pattern))
+    (throw (ex-info "Empty grid or pattern" {:grid grid :pattern pattern})))
+  (let [{:keys [grid-rows grid-cols pattern-rows pattern-cols]} (count-rows-and-cols grid pattern)
         ;; Allow patterns to start outside the grid
         ;; but ensure at least one character overlaps with the grid
         min-row (- (dec pattern-rows)) ; Allow pattern to start with only bottom char visible
@@ -81,10 +83,7 @@
    Colors are working when used in the terminal (ie. not in the REPL)"
   [grid pattern]
   (let [matches (find-pattern grid pattern)
-        pattern-rows (count pattern)
-        pattern-cols (count (first pattern))
-        grid-rows (count grid)
-        grid-cols (count (first grid))
+        {:keys [grid-rows grid-cols pattern-rows pattern-cols]} (count-rows-and-cols grid pattern)
         ;; Calculate extended display bounds to show complete patterns
         all-pattern-positions (for [match matches
                                     r (range pattern-rows)

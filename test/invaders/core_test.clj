@@ -60,7 +60,11 @@
     (is (= [[1 0]]
            (sut/find-pattern simple-radar invader)))
     (is (= [[0 0] [0 1] [0 2] [1 1] [1 2] [2 0] [2 1] [2 2]]
-           (sut/find-pattern simple-radar reverse-invader)))))
+           (sut/find-pattern simple-radar reverse-invader)))
+    (is (thrown-with-msg? clojure.lang.ExceptionInfo
+                          #"Empty grid or pattern"
+                          (sut/find-pattern simple-radar [])
+                          (sut/find-pattern [] (sut/str->grid "-"))))))
 
 (deftest line-radar-test
   (let [empty-radar-1x3 (str->grid "---")
