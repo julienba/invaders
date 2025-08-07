@@ -1,14 +1,13 @@
 (ns invaders.core
-  (:require [clojure.string :as string]
-            [bling.core :as bling]
+  (:require [bling.core :as bling]
             [bling.banner :refer [banner]]
-            [bling.fonts.rounded]))
+            [bling.fonts.rounded]
+            [clojure.string :as string]))
 
 (defn str->grid
   "Sanitize the input and return a 2D array.
-   It will throw an exception if the grid is not legitimate:
-   - wrong char
-   - wrong size"
+   It will throw an exception if the grid is not legitimate (wrong char or wrong size).
+   The chars allow are '-', 'o' and 'O'"
   [s]
   (when-not (string? s)
     (throw (ex-info "Wrong input" {:input s})))
@@ -33,9 +32,9 @@
    :pattern-cols (count (first pattern))})
 
 (defn- pattern-matches?
+  "Check each cell in the pattern that overlaps with the grid"
   [grid pattern start-row start-col]
   (let [{:keys [grid-rows grid-cols pattern-rows pattern-cols]} (count-rows-and-cols grid pattern)]
-    ;; Check each cell in the pattern that overlaps with the grid
     (every? true?
             (for [r (range pattern-rows)
                   c (range pattern-cols)
@@ -49,7 +48,7 @@
                  (get-in pattern [r c]))))))
 
 (defn find-pattern
-  "Returns a sequence of [row col] coordinates where the pattern starts."
+  "Returns a sequence of [row col] coordinates where the pattern starts"
   [grid pattern]
   (when (or (empty? grid) (empty? pattern))
     (throw (ex-info "Empty grid or pattern" {:grid grid :pattern pattern})))

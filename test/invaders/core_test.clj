@@ -139,6 +139,7 @@
     (is (seq (sut/find-pattern radar invader1)))
     (is (seq (sut/find-pattern radar invader2)))))
 
+;; Non-exhaustive test
 (deftest rich-print-test
   (is (nil? (#'sut/rich-print :test)))
   (is (nil? (#'sut/print-radar-with-invaders (str->grid "-o-") (str->grid "-o")))
